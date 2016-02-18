@@ -79,6 +79,10 @@ class DefaultNamer
             $fieldValue = $obj->{'get' . ucfirst($field)}();
         }
 
+        if($fieldValue instanceof \DateTime) {
+            $fieldValue = $fieldValue->format('Y_m_d_H_i_s');
+        }
+
         if (!$fieldValue) $fieldValue = $obj->getId();
         return $fieldValue;
     }
