@@ -75,7 +75,6 @@ class DefaultNamer
     {
         $obj = $propertyMapping->getObj();
 
-        $fieldValue = '';
         if (isset($params['use_field_name']) && $params['use_field_name']) {
             $fieldValue = $propertyMapping->getFileDataPropertyName();
         } else {
