@@ -53,16 +53,6 @@ class PropertyMapping
         $this->namerServiceInvoker = $namerServiceInvoker;
     }
 
-    /**
-     * Gets the reflection property that represents the
-     * annotated property.
-     *
-     * @return \ReflectionProperty The property.
-     */
-    /*    public function getProperty()
-    {
-        return $this->property;
-    }*/
 
     /**
      * Sets the reflection property that represents the annotated
@@ -90,6 +80,11 @@ class PropertyMapping
     }
 
 
+    /**
+     * Invoke file namers
+     * @param $fileName
+     * @return mixed
+     */
     public function useFileNamer($fileName)
     {
         if ($this->hasNamer()) {
@@ -113,6 +108,10 @@ class PropertyMapping
     }
 
 
+    /**
+     * Determines if the mapping requires store full path to file
+     * @return bool
+     */
     public function isStoreFullDir()
     {
         return isset($this->config['store_fulldir']) && $this->config['store_fulldir'];
@@ -276,7 +275,7 @@ class PropertyMapping
      */
     public function getFileUploadPropertyName()
     {
-        return $this->fileUploadProperty->getName();
+        return   $this->fileUploadProperty->getName();
     }
 
     /**
@@ -316,6 +315,17 @@ class PropertyMapping
         return $this->fileDataProperty->getName();
     }
 
+    /**
+     * Property for upload and property for file data is one property
+     * @return bool
+     */
+    public function isUseOneProperty()
+    {
+
+        return  $this->getFileDataPropertyName() ==  $this->getFileUploadPropertyName() ? true : false;
+    }
+
+
 
     /**
      * Determines if the file should be deleted upon removal of the
@@ -348,7 +358,7 @@ class PropertyMapping
     {
         if (!$fileName) {
             $fileData = $this->getFileDataPropertyValue();
-            if ($fileData) $fileName = $fileData['fileName'];
+            if ($fileData && isset($fileData['fileName'])) $fileName = $fileData['fileName'];
         }
         if (!$fileName) return null;
 

@@ -8,15 +8,19 @@ php:
   - hhvm
 
 env:
-    - SYMFONY_VERSION=2.2.*
     - SYMFONY_VERSION=2.3.*
     - SYMFONY_VERSION=2.4.*
     - SYMFONY_VERSION=2.5.*
     - SYMFONY_VERSION=2.6.*
+    - SYMFONY_VERSION=2.7.*
 
 matrix:
   allow_failures:
     - php: hhvm
+
+addons:
+  code_climate:
+      repo_token: f0a01fd708e8f258d3532dd82d1b55c3873953ad56fa2796d178483b9c9d6228
 
 before_script:
 
@@ -24,8 +28,12 @@ before_script:
     - "mkdir -p ~/.composer"
     - cp .travis.composer.config.json ~/.composer/config.json
     - composer self-update
-    - composer require symfony/framework-bundle:${SYMFONY_VERSION}
+    - composer require symfony/form:${SYMFONY_VERSION}
+    - composer require symfony/twig-bundle:${SYMFONY_VERSION}
+    - composer require symfony/twig-bridge:${SYMFONY_VERSION}
     - composer require symfony/templating:${SYMFONY_VERSION}
+    - composer require symfony/doctrine-bridge:${SYMFONY_VERSION}
+    - composer require symfony/framework-bundle:${SYMFONY_VERSION}
     - composer install --dev
 
 notifications:

@@ -120,7 +120,7 @@ class UploaderListenerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($filePropertyValue));
 
 
-        if ($propertyName) $propertyMapping
+         if ($propertyName) $propertyMapping
             ->expects($this->any())
             ->method('getFileUploadPropertyName')
             ->will($this->returnValue($propertyName));
@@ -132,9 +132,15 @@ class UploaderListenerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($propertyName));
 
 
+        if ($propertyName) $propertyMapping
+            ->expects($this->any())
+            ->method('isUseOneProperty')
+            ->will($this->returnValue(true));
+
+
         $this->dataStorage
             ->expects($this->any())
-            ->method('currentFieldData')
+            ->method('previusFieldDataIfChanged')
             ->with($propertyName, $args)
             ->will($this->returnValue($currentFieldData));
 
